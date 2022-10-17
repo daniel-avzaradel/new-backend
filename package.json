@@ -6,9 +6,17 @@
   "scripts": {
     "server": "nodemon server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniel-avzaradel/new-backend.git"
+  },
   "keywords": [],
   "author": "Daniel Avzaradel",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniel-avzaradel/new-backend/issues"
+  },
+  "homepage": "https://github.com/daniel-avzaradel/new-backend#readme",
   "dependencies": {
     "colors": "^1.4.0",
     "cors": "^2.8.5",
