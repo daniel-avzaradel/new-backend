@@ -4,15 +4,15 @@ const User = require('../models/users.model');
 
 router.get('/', (req, res) => {
   User.find()
-    .then((users) => res.json(users))
+    .then((users) => res.status(200).json(users))
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  User.findById(id).then(() =>
-    res.status(200).json(`User of id: ${req.params.id} reveiced`)
-  );
+  User.findById(id)
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.status(400).json('Error: ' + err));
 });
 
 router.post('/add', (req, res) => {
@@ -21,23 +21,19 @@ router.post('/add', (req, res) => {
 
   newUser
     .save()
-    .then(() => res.json('Username successfully added'))
+    .then(() => res.status(201).json(`User ${username} saved.`))
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
-  const updatedUser = User.findById(id);
+  const updateUser = User.findById(id);
 
-  updatedUser
-    .updateOne({
-      username: req.body.username,
-    })
-    .then(() =>
-      res
-        .status(200)
-        .json(`Username ${req.body.username} was successfully updated`)
-    )
+  console.log(updateUser);
+
+  updateUser
+    .updateOne()
+    .then(() => res.status(200).json(`User ${id} updated`))
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
@@ -45,11 +41,11 @@ router.delete('/:id', (req, res) => {
   const { id } = req.params;
   const deleteUser = User.findById(id);
 
+  console.log(deleteUser);
+
   deleteUser
     .deleteOne()
-    .then(() =>
-      res.status(200).json(`Username of id: ${id} was successfully removed`)
-    )
+    .then(() => res.status(200).json(`User ${id} removed`))
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
