@@ -1,20 +1,21 @@
 const Users = require('../models/users.model');
+const asyncHandler = require('express-async-handler');
 
-const getUsers = (req, res) => {
+const getUsers = asyncHandler((req, res) => {
   Users.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json('Error: ' + err));
-};
+});
 
-const getUser = (req, res) => {
+const getUser = asyncHandler((req, res) => {
   const { id } = req.params;
 
   Users.findById(id)
     .then((user) => res.json(user))
     .catch((err) => res.status(400).json('Error: ' + err));
-};
+});
 
-const addUser = (req, res) => {
+const addUser = asyncHandler((req, res) => {
   const username = req.body.username;
 
   const newUser = new Users({ username });
@@ -23,9 +24,9 @@ const addUser = (req, res) => {
     .save()
     .then(() => res.json(`Username ${username} saved`))
     .catch((err) => res.status(400).json('Error: ' + err));
-};
+});
 
-const updateUser = (req, res) => {
+const updateUser = asyncHandler((req, res) => {
   const { id } = req.params;
   const updatedUser = Users.findById(id);
 
@@ -33,9 +34,9 @@ const updateUser = (req, res) => {
     .updateOne()
     .then(() => res.json(`Username of id: ${id} was updated`))
     .catch((err) => res.status(400).json('Error: ' + err));
-};
+});
 
-const deleteUser = (req, res) => {
+const deleteUser = asyncHandler((req, res) => {
   const { id } = req.params;
   const deleteUser = Users.findById(id);
 
@@ -43,7 +44,7 @@ const deleteUser = (req, res) => {
     .deleteOne()
     .then(() => res.json(`Username of id: ${id} was removed`))
     .catch((err) => res.status(400).json('Error: ' + err));
-};
+});
 
 module.exports = {
   getUsers,
