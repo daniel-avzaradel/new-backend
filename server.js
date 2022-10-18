@@ -18,6 +18,9 @@ connection.once('open', () => {
   console.log(`MongoDB connection was successfully established`.blue);
 });
 
+const usersRouter = require('./routes/users.route');
+app.use('/users', usersRouter);
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`.cyan.underline);
 });
